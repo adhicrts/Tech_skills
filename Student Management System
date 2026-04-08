@@ -1,0 +1,99 @@
+import java.util.Scanner;
+class Student {
+    String name;
+    int rollNo;
+    int marks;
+    Student next;
+    Student(String name, int rollNo, int marks) {
+        this.name = name;
+        this.rollNo = rollNo;
+        this.marks = marks;
+        this.next = null;
+    }
+}
+class StudentList {
+    Student head = null;
+    void addStudent(String name, int rollNo, int marks) {
+        Student newStudent = new Student(name, rollNo, marks);
+        if (head == null) {
+            head = newStudent;
+        } else {
+            Student temp = head;
+            while (temp.next != null) {
+                temp = temp.next;
+            }
+            temp.next = newStudent;
+        }
+        System.out.println("Student added successfully.");
+    }
+    void displayStudents() {
+
+        if (head == null) {
+            System.out.println("No students available.");
+            return;
+        }
+        Student temp = head;
+        System.out.println("\nStudent Records:");
+        while (temp != null) {
+            System.out.println("Name: " + temp.name);
+            System.out.println("Roll No: " + temp.rollNo);
+            System.out.println("Marks: " + temp.marks);
+            System.out.println("--------------------");
+            temp = temp.next;
+        }
+    }
+    void searchStudent(int rollNo) {
+        Student temp = head;
+        while (temp != null) {
+            if (temp.rollNo == rollNo) {
+                System.out.println("Student Found");
+                System.out.println("Name: " + temp.name);
+                System.out.println("Marks: " + temp.marks);
+                return;
+            }
+            temp = temp.next;
+        }
+        System.out.println("Student not found.");
+    }
+}
+public class StudentManagement {
+    public static void main(String[] args) {
+        Scanner sc = new Scanner(System.in);
+        StudentList list = new StudentList();
+        int choice;
+        do {
+            System.out.println("\n1. Add Student");
+            System.out.println("2. Display Students");
+            System.out.println("3. Search Student");
+            System.out.println("4. Exit");
+            System.out.print("Enter choice: ");
+            choice = sc.nextInt();
+            switch (choice) {
+                case 1:
+                    sc.nextLine();
+                    System.out.print("Enter Name: ");
+                    String name = sc.nextLine();
+                    System.out.print("Enter Roll Number: ");
+                    int roll = sc.nextInt();
+                    System.out.print("Enter Marks: ");
+                    int marks = sc.nextInt();
+                    list.addStudent(name, roll, marks);
+                    break;
+                case 2:
+                    list.displayStudents();
+                    break;
+                case 3:
+                    System.out.print("Enter Roll Number to search: ");
+                    int r = sc.nextInt();
+                    list.searchStudent(r);
+                    break;
+                case 4:
+                    System.out.println("Exiting program...");
+                    break;
+                default:
+                    System.out.println("Invalid choice");
+            }
+        } while (choice != 4);
+        sc.close();
+    }
+}
